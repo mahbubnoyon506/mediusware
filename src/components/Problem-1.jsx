@@ -4,10 +4,9 @@ import React, { useEffect, useState } from "react";
 const Problem1 = () => {
   const [name, setName] = useState("");
   const [status, setStatus] = useState("");
-  const [sortData, setSortData] = useState("");
-  const [itemAdd, setItemAdd] = useState("");
-
   const [show, setShow] = useState("all");
+
+  console.log(status);
 
   const handleClick = (val) => {
     setShow(val);
@@ -19,17 +18,25 @@ const Problem1 = () => {
       name,
       status,
     };
-    // setItemAdd(data);
     fakeData.push(data);
   };
 
   const getSortData = fakeData.filter((item) => item.status == show);
 
+  const reArrangeData = [...fakeData].sort((a, b) => {
+    if (a.status === "active" && b.status === "completed") {
+      return -1;
+    } else if (a.status === "completed" && b.status === "active") {
+      return 1;
+    }
+    return 0;
+  });
+
   let content = "";
   if (show == "all") {
     content = (
       <>
-        {fakeData.map((item, index) => (
+        {reArrangeData.map((item, index) => (
           <tr>
             <td>{index + 1}</td>
             <td>{item.name}</td>
@@ -73,7 +80,7 @@ const Problem1 = () => {
               <input
                 type="text"
                 className="form-control"
-                onChange={(e) => setStatus(e.target.value)}
+                onChange={(e) => setStatus(e.target.value.toLowerCase())}
                 placeholder="Status"
               />
             </div>
@@ -146,18 +153,28 @@ const fakeData = [
     status: "active",
   },
   {
-    id: 2,
-    name: "Mahbub",
-    status: "active",
-  },
-  {
     id: 3,
     name: "John",
     status: "completed",
   },
   {
+    id: 2,
+    name: "Mahbub",
+    status: "active",
+  },
+  {
     id: 4,
     name: "Michael",
+    status: "completed",
+  },
+  {
+    id: 2,
+    name: "Alim",
+    status: "active",
+  },
+  {
+    id: 4,
+    name: "Hela",
     status: "completed",
   },
 ];

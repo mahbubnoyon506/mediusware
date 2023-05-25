@@ -1,32 +1,24 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const USContact = () => {
-  const [allData, setAllData] = useState([]);
-
   const navigate = useNavigate();
+  const location = useLocation();
+  const allContacts = location.state
 
-  useEffect(() => {
-    (async () => {
-      await axios
-        .get("https://contact.mediusware.com/api/contacts/")
-        .then((res) => setAllData(res.data.results));
-    })();
-  }, []);
-
-  const filterData = allData.filter((item) => item.country.name == 'United States')
-console.log(filterData)
+  const filterData = allContacts.filter(
+    (item) => item.country.name == "United States"
+  );
 
   return (
-
     <div className="container">
       <div className="d-flex justify-content-center py-5">
         <div>
           <button
             type="button"
             class="btn me-2 text-white"
-            onClick={() => navigate('/allcontacts', { state: allData })}
+            onClick={() => navigate("/allcontacts", { state: allContacts })}
             style={{ background: "#46139f" }}
           >
             All Contacts
@@ -34,7 +26,7 @@ console.log(filterData)
           <button
             type="button"
             class="btn text-white me-2"
-            onClick={() => navigate('/uscontacts')}
+            onClick={() => navigate("/uscontacts", {state: allContacts})}
             style={{ background: "#ff7f50" }}
           >
             US Contacts

@@ -31,7 +31,7 @@ const Problem2 = () => {
           <button
             className="btn btn-lg btn-outline-warning"
             type="button"
-            onClick={() => navigate('/uscontacts')}
+            onClick={() => navigate('/uscontacts', { state: allData })}
           >
             US Contacts
           </button>

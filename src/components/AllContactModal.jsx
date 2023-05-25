@@ -3,19 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const AllContactModal = () => {
-  const [allData, setAllData] = useState([]);
-
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    (async () => {
-      await axios
-        .get("https://contact.mediusware.com/api/contacts/")
-        .then((res) => setAllData(res.data.results));
-    })();
-  }, []);
-
   const allContacts = location.state;
 
   return (
@@ -25,7 +14,7 @@ const AllContactModal = () => {
           <button
             type="button"
             class="btn me-2 text-white"
-            onClick={() => navigate('/allcontacts', { state: allData })}
+            onClick={() => navigate('/allcontacts', { state: allContacts })}
             style={{background: '#46139f'}}
           >
             All Contacts
@@ -33,7 +22,7 @@ const AllContactModal = () => {
           <button
             type="button"
             class="btn text-white me-2"
-            onClick={() => navigate('/uscontacts')}
+            onClick={() => navigate('/uscontacts', { state: allContacts })}
             style={{background: '#ff7f50'}}
           >
             US Contacts
